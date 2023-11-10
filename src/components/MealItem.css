@@ -1,0 +1,57 @@
+#meal-item {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    width: 500px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+    padding-bottom: 1rem;
+  }
+  
+  #meal-item img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-left: 15px;
+    margin-top: 20px;
+  } 
+  
+  #meal-info{
+    text-align: left;
+    margin-left: 10px;
+   
+   
+  }
+  
+  #meal-info h3{
+    text-align: right;
+  }
+
+#select-area{
+    margin-left: auto;
+    margin-right: 10px;
+    padding-top: 8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
+    align-items: flex-end;
+    height:100%;     
+}
+
+  p{
+    font-weight:400;
+  }
+
+  .bold{
+    font-weight: 700;
+  }
+
+  .price{
+    font-size: 20px;
+    font-weight: bold;
+    margin:0;
+  }
+
+
+  
+  
