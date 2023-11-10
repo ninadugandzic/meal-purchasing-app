@@ -36,7 +36,6 @@ function cartReducer(state, action) {
       updatedPeople[selectedPersonIndex].meals.push(meal);
 
       state.totalPrice += meal.price;
-      console.log(state.totalPrice);
       return { ...state, people: updatedPeople };
     }
 
@@ -67,7 +66,6 @@ function cartReducer(state, action) {
 
       updatedPeople[selectedPersonIndex].selectedDrinks.push(drink);
       state.totalPrice += drink.price;
-      console.log(state.totalPrice);
       return { ...state, people: updatedPeople };
     }
 
