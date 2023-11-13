@@ -14,7 +14,7 @@ export default function MealItem({ meal }) {
     if (!isSelected) {
       cartCtx.addItem(meal);
     } else {
-      cartCtx.removeItem(meal);
+      cartCtx.removeItem(meal.id);
     }
   }
 

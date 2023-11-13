@@ -22,7 +22,7 @@ export default function Drinks({ meal }) {
     if (!isSelected) {
       cartCtx.addDrink(drink);
     } else {
-      cartCtx.removeItem(drink.id);
+      cartCtx.removeDrink(drink.id);
     }
   }
 

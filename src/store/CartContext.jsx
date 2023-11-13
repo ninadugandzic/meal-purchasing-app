@@ -44,12 +44,23 @@ function cartReducer(state, action) {
       const { itemIndex } = action;
       const { selectedPersonId } = state;
       const updatedPeople = [...state.people];
+      let updatedPrice = state.totalPrice;
       const selectedPersonIndex = updatedPeople.findIndex(
         (person) => person.id === selectedPersonId
       );
 
-      updatedPeople[selectedPersonIndex].meals.splice(itemIndex, 1);
-      return { ...state, people: updatedPeople };
+      const selectedItemIndex = updatedPeople[
+        selectedPersonIndex
+      ].meals.findIndex((item) => item.id === itemIndex);
+
+      updatedPrice -=
+        updatedPeople[selectedPersonIndex].meals[selectedItemIndex].price;
+
+      console.log(updatedPrice);
+
+      updatedPeople[selectedPersonIndex].meals.splice(selectedItemIndex, 1);
+
+      return { ...state, people: updatedPeople, totalPrice: updatedPrice };
     }
 
     case "SELECT_PERSON": {
@@ -74,12 +85,24 @@ function cartReducer(state, action) {
       const { itemIndex } = action;
       const { selectedPersonId } = state;
       const updatedPeople = [...state.people];
+      let updatedPrice = state.totalPrice;
       const selectedPersonIndex = updatedPeople.findIndex(
         (person) => person.id === selectedPersonId
       );
 
-      updatedPeople[selectedPersonIndex].drinks.splice(itemIndex, 1);
-      return { ...state, people: updatedPeople };
+      const selectedItemIndex = updatedPeople[
+        selectedPersonIndex
+      ].selectedDrinks.findIndex((item) => item.id === itemIndex);
+
+      updatedPrice -=
+        updatedPeople[selectedPersonIndex].selectedDrinks[selectedItemIndex]
+          .price;
+
+      updatedPeople[selectedPersonIndex].selectedDrinks.splice(
+        selectedItemIndex,
+        1
+      );
+      return { ...state, people: updatedPeople, totalPrice: updatedPrice };
     }
 
     default:
@@ -110,7 +133,7 @@ export function CartContextProvider({ children }) {
   const addItem = (meal) => {
     cartDispatch({ type: "ADD_ITEM", meal });
   };
-  const removeItem = ({ itemIndex }) =>
+  const removeItem = (itemIndex) =>
     cartDispatch({ type: "REMOVE_ITEM", itemIndex });
 
   const selectPerson = (personId) =>
@@ -118,7 +141,7 @@ export function CartContextProvider({ children }) {
 
   const addDrink = (drink) => cartDispatch({ type: "ADD_DRINK", drink });
 
-  const removeDrink = ({ itemIndex }) =>
+  const removeDrink = (itemIndex) =>
     cartDispatch({ type: "REMOVE_DRINK", itemIndex });
 
   const cartContext = {
