@@ -56,8 +56,6 @@ function cartReducer(state, action) {
       updatedPrice -=
         updatedPeople[selectedPersonIndex].meals[selectedItemIndex].price;
 
-      console.log(updatedPrice);
-
       updatedPeople[selectedPersonIndex].meals.splice(selectedItemIndex, 1);
 
       return { ...state, people: updatedPeople, totalPrice: updatedPrice };

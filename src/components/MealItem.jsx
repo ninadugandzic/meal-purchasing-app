@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { currencyFormatter } from "../utils/formatting";
 import Button from "./UI/Button";
 import CartContext from "../store/CartContext";
@@ -8,6 +8,13 @@ import "./MealItem.css";
 export default function MealItem({ meal }) {
   const [isSelected, setIsSelected] = useState(false);
   const cartCtx = useContext(CartContext);
+
+  useEffect(() => {
+    const selectedMeal = cartCtx.people[
+      cartCtx.selectedPersonId - 1
+    ].meals.find((m) => m.id === meal.id);
+    setIsSelected(!!selectedMeal);
+  }, [cartCtx.people, cartCtx.selectedPersonId, meal.id]);
 
   function handleSelectMeal(meal) {
     setIsSelected((prevIsSelected) => !prevIsSelected);
