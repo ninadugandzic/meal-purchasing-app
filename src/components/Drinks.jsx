@@ -8,6 +8,8 @@ export default function Drinks({ meal }) {
   const cartCtx = useContext(CartContext);
   const availableDrinks = meal.drinks;
 
+  const [isSelected, setIsSelected] = useState(false);
+
   const imageStyle = {
     width: "30px",
     height: "30px",
@@ -16,7 +18,12 @@ export default function Drinks({ meal }) {
   };
 
   function handleDrinkSelection(drink) {
-    cartCtx.addDrink(drink);
+    setIsSelected((prevIsSelected) => !prevIsSelected);
+    if (!isSelected) {
+      cartCtx.addDrink(drink);
+    } else {
+      cartCtx.removeItem(drink.id);
+    }
   }
 
   return (
@@ -37,7 +44,7 @@ export default function Drinks({ meal }) {
         src={juice}
         alt="juice"
         style={imageStyle}
-        onClick={() => handleDrinkSelection(availableDrinks[2])}
+        onClick={() => handleDrinkSelection(availableDrinks[1])}
       />
     </div>
   );

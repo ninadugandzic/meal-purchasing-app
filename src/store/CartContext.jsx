@@ -21,6 +21,7 @@ const CartContext = createContext({
   removeItem: (itemIndex) => {},
   selectPerson: (personId) => {},
   addDrink: (drink) => {},
+  removeDrink: (itemIndex) => {},
 });
 
 function cartReducer(state, action) {
@@ -28,11 +29,11 @@ function cartReducer(state, action) {
     case "ADD_ITEM": {
       const { meal } = action;
       const { selectedPersonId } = state;
+
       const updatedPeople = [...state.people];
       const selectedPersonIndex = updatedPeople.findIndex(
         (person) => person.id === selectedPersonId
       );
-
       updatedPeople[selectedPersonIndex].meals.push(meal);
 
       state.totalPrice += meal.price;
@@ -53,7 +54,7 @@ function cartReducer(state, action) {
 
     case "SELECT_PERSON": {
       const selectedPersonId = action;
-      return { ...state, selectedPersonId };
+      return { ...state, selectedPersonId: selectedPersonId.personId + 1 };
     }
 
     case "ADD_DRINK": {
@@ -66,6 +67,18 @@ function cartReducer(state, action) {
 
       updatedPeople[selectedPersonIndex].selectedDrinks.push(drink);
       state.totalPrice += drink.price;
+      return { ...state, people: updatedPeople };
+    }
+
+    case "REMOVE_DRINK": {
+      const { itemIndex } = action;
+      const { selectedPersonId } = state;
+      const updatedPeople = [...state.people];
+      const selectedPersonIndex = updatedPeople.findIndex(
+        (person) => person.id === selectedPersonId
+      );
+
+      updatedPeople[selectedPersonIndex].drinks.splice(itemIndex, 1);
       return { ...state, people: updatedPeople };
     }
 
@@ -105,13 +118,18 @@ export function CartContextProvider({ children }) {
 
   const addDrink = (drink) => cartDispatch({ type: "ADD_DRINK", drink });
 
+  const removeDrink = ({ itemIndex }) =>
+    cartDispatch({ type: "REMOVE_DRINK", itemIndex });
+
   const cartContext = {
     selectedPersonId: cartState.selectedPersonId,
     people: cartState.people,
+    totalPrice: cartState.totalPrice,
     addItem,
     removeItem,
     selectPerson,
     addDrink,
+    removeDrink,
   };
 
   return (

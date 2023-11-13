@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { currencyFormatter } from "../utils/formatting";
 import Button from "./UI/Button";
 import CartContext from "../store/CartContext";
@@ -6,10 +6,16 @@ import Drinks from "./Drinks";
 import "./MealItem.css";
 
 export default function MealItem({ meal }) {
+  const [isSelected, setIsSelected] = useState(false);
   const cartCtx = useContext(CartContext);
 
   function handleSelectMeal(meal) {
-    cartCtx.addItem(meal);
+    setIsSelected((prevIsSelected) => !prevIsSelected);
+    if (!isSelected) {
+      cartCtx.addItem(meal);
+    } else {
+      cartCtx.removeItem(meal);
+    }
   }
 
   return (
@@ -32,10 +38,10 @@ export default function MealItem({ meal }) {
         <div id="select-area">
           {<p className="price">{currencyFormatter.format(meal.price)}</p>}
           <Button
-            className="select-button"
+            className={`select-button ${isSelected ? "selected" : ""}`}
             onClick={() => handleSelectMeal(meal)}
           >
-            Select
+            {isSelected ? "Deselect" : "Select"}
           </Button>
         </div>
       </li>
