@@ -15,7 +15,7 @@ export default function CartInfo() {
   return (
     <div id="cart-info">
       <h3>
-        <i class="fa fa-plane" aria-hidden="true"></i> Riga - St. Petersburg
+        <i className="fa fa-plane" aria-hidden="true"></i> Riga - St. Petersburg
       </h3>
       <Button onClick={() => handleSelectPerson(0)} className="passenger-btn">
         {cartCtx.people[0].name}
